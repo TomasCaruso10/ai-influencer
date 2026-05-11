@@ -1,0 +1,226 @@
+{
+  "_comment": "bigASP v2.5 + LoRA aiinfluencer1 SDXL + IPAdapter FaceID Plus v2 + FaceDetailer multi-pass. Stack ganador 2026.",
+  "4": {
+    "inputs": {"ckpt_name": "bigaspv25.safetensors"},
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {"title": "Load bigASP v2.5"}
+  },
+  "5": {
+    "inputs": {
+      "lora_name": "aiinfluencer1_sdxl_FINAL.safetensors",
+      "strength_model": 1.0,
+      "strength_clip": 1.0,
+      "model": ["4", 0],
+      "clip": ["4", 1]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {"title": "LoRA aiinfluencer1 SDXL"}
+  },
+  "5b": {
+    "_comment": "IPAdapter FaceID LoRA helper (required by FaceID Plus v2)",
+    "inputs": {
+      "lora_name": "ip-adapter-faceid-plusv2_sdxl_lora.safetensors",
+      "strength_model": 0.65,
+      "strength_clip": 0.65,
+      "model": ["5", 0],
+      "clip": ["5", 1]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {"title": "IPAdapter FaceID LoRA"}
+  },
+  "5c": {
+    "_comment": "IPAdapter FaceID Plus v2 — refuerza identidad usando foto canon como referencia",
+    "inputs": {
+      "model": ["5b", 0],
+      "ipadapter": ["5d", 0],
+      "image": ["5e", 0],
+      "weight": 0.75,
+      "weight_faceidv2": 0.85,
+      "weight_type": "linear",
+      "combine_embeds": "concat",
+      "start_at": 0.0,
+      "end_at": 1.0,
+      "embeds_scaling": "V only"
+    },
+    "class_type": "IPAdapterFaceID",
+    "_meta": {"title": "IPAdapter FaceID Plus v2"}
+  },
+  "5d": {
+    "inputs": {"preset": "FACEID PLUS V2", "lora_strength": 0.65, "provider": "CUDA", "model": ["5b", 0]},
+    "class_type": "IPAdapterUnifiedLoader",
+    "_meta": {"title": "IPAdapter Loader"}
+  },
+  "5e": {
+    "_comment": "Foto canon ID card — UNA imagen reference de la mejor toma del personaje. Cargar desde outputs/canon/_id_card.png",
+    "inputs": {"image": "_id_card.png", "upload": "image"},
+    "class_type": "LoadImage",
+    "_meta": {"title": "Canon ID Card"}
+  },
+  "6": {
+    "inputs": {"text": "PLACEHOLDER_POSITIVE", "clip": ["5b", 1]},
+    "class_type": "CLIPTextEncode",
+    "_meta": {"title": "POSITIVE"}
+  },
+  "7": {
+    "inputs": {
+      "text": "child, teen, minor, underage, kid, schoolgirl, loli, young girl, adolescent, immature, low quality, blurry, deformed, bad anatomy, extra limbs, watermark, text",
+      "clip": ["5b", 1]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {"title": "NEGATIVE"}
+  },
+  "8": {
+    "inputs": {"width": 1024, "height": 1024, "batch_size": 1},
+    "class_type": "EmptyLatentImage",
+    "_meta": {"title": "Empty Latent"}
+  },
+  "9": {
+    "inputs": {
+      "seed": 42,
+      "steps": 25,
+      "cfg": 7.0,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
+      "denoise": 1.0,
+      "model": ["5c", 0],
+      "positive": ["6", 0],
+      "negative": ["7", 0],
+      "latent_image": ["8", 0]
+    },
+    "class_type": "KSampler",
+    "_meta": {"title": "KSampler"}
+  },
+  "10": {
+    "inputs": {"samples": ["9", 0], "vae": ["4", 2]},
+    "class_type": "VAEDecode",
+    "_meta": {"title": "VAE Decode"}
+  },
+  "20": {
+    "inputs": {"model_name": "bbox/face_yolov8m.pt"},
+    "class_type": "UltralyticsDetectorProvider",
+    "_meta": {"title": "Face Detector"}
+  },
+  "30": {
+    "_comment": "FaceDetailer pass 1 (denoise 0.45)",
+    "inputs": {
+      "image": ["10", 0],
+      "model": ["5c", 0],
+      "clip": ["5b", 1],
+      "vae": ["4", 2],
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 142,
+      "steps": 25,
+      "cfg": 7.0,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
+      "positive": ["6", 0],
+      "negative": ["7", 0],
+      "denoise": 0.45,
+      "feather": 24,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.5,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3.0,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 20,
+      "bbox_detector": ["20", 0]
+    },
+    "class_type": "FaceDetailer",
+    "_meta": {"title": "FaceDetailer pass1 d=0.45"}
+  },
+  "31": {
+    "inputs": {
+      "image": ["30", 0],
+      "model": ["5c", 0],
+      "clip": ["5b", 1],
+      "vae": ["4", 2],
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 242,
+      "steps": 25,
+      "cfg": 7.0,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
+      "positive": ["6", 0],
+      "negative": ["7", 0],
+      "denoise": 0.25,
+      "feather": 16,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.5,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3.0,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 16,
+      "bbox_detector": ["20", 0]
+    },
+    "class_type": "FaceDetailer",
+    "_meta": {"title": "FaceDetailer pass2 d=0.25"}
+  },
+  "32": {
+    "inputs": {
+      "image": ["31", 0],
+      "model": ["5c", 0],
+      "clip": ["5b", 1],
+      "vae": ["4", 2],
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 342,
+      "steps": 25,
+      "cfg": 7.0,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
+      "positive": ["6", 0],
+      "negative": ["7", 0],
+      "denoise": 0.15,
+      "feather": 8,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.5,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3.0,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 8,
+      "bbox_detector": ["20", 0]
+    },
+    "class_type": "FaceDetailer",
+    "_meta": {"title": "FaceDetailer pass3 d=0.15 polish"}
+  },
+  "40": {
+    "inputs": {"filename_prefix": "sdxl_bigasp_v2", "images": ["32", 0]},
+    "class_type": "SaveImage",
+    "_meta": {"title": "Save"}
+  }
+}
