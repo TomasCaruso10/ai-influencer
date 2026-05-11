@@ -1,0 +1,11 @@
+# Eval prompts v2 — 8 prompts variados para batch eval post-LoRA v2
+# Cada línea = un prompt independiente (NO comentarios encadenados al prompt).
+# Trigger word "aiinfluencer1" debe ir incluido (el LoRA fue entrenado con trigger).
+aiinfluencer1, close-up portrait, looking directly at camera, soft natural window light, slight smile, bedroom background, photorealistic candid iPhone shot
+aiinfluencer1, mid-shot, sitting on cafe terrace, holding coffee cup, golden hour sunlight, casual sweater, candid moment, instagram aesthetic
+aiinfluencer1, full body, standing on balcony, ocean view background, summer dress, soft sunset light, relaxed pose, photorealistic
+aiinfluencer1, selfie style, gym mirror, athletic outfit, neutral expression, fluorescent gym lighting, casual confident
+aiinfluencer1, close-up, hair styled in loose waves, soft pink lipstick, studio softbox lighting, beauty shot style, sharp focus on eyes
+aiinfluencer1, mid-shot, walking on city street at dusk, denim jacket, urban background bokeh, candid lifestyle photography
+aiinfluencer1, three-quarter shot, sitting on couch at home, cozy sweater, warm lamp lighting, evening relaxed mood, natural skin texture
+aiinfluencer1, close-up smiling, outdoor park sunlight, casual top, joyful expression, shallow depth of field, photorealistic
