@@ -1,0 +1,9 @@
+# Eval prompts v2 PRO — refuerzo de trigger + framing facial explícito.
+(aiinfluencer1:1.15), close-up portrait, face visible, looking directly at camera, soft natural window light, slight smile, bedroom background, sharp focus on eyes, photorealistic candid iPhone shot
+(aiinfluencer1:1.15), mid-shot, face visible, looking at camera, sitting on cafe terrace, holding coffee cup, golden hour sunlight, casual sweater, candid moment, instagram aesthetic
+(aiinfluencer1:1.15), three-quarter shot, face clearly visible, looking at camera, standing on balcony, ocean view background, summer dress, soft sunset light, photorealistic
+(aiinfluencer1:1.15), selfie style, face centered, gym mirror reflection, athletic outfit, neutral expression, fluorescent gym lighting, casual confident
+(aiinfluencer1:1.15), close-up, hair styled in loose waves, soft pink lipstick, studio softbox lighting, beauty shot style, sharp focus on eyes
+(aiinfluencer1:1.15), mid-shot, face visible, looking at camera, walking on city street at dusk, denim jacket, urban background bokeh, candid lifestyle photography
+(aiinfluencer1:1.15), three-quarter shot, face visible, sitting on couch at home, cozy sweater, warm lamp lighting, evening relaxed mood, natural skin texture
+(aiinfluencer1:1.15), close-up smiling, outdoor park sunlight, casual top, joyful expression, shallow depth of field, photorealistic
