@@ -37,8 +37,11 @@ def wait_completion(comfy_url: str, prompt_id: str, timeout: int = 300) -> dict:
     while time.time() - start < timeout:
         with urllib.request.urlopen(f"{comfy_url}/history/{prompt_id}", timeout=15) as resp:
             history = json.load(resp)
-        if prompt_id in history:
-            return history[prompt_id]
+        entry = history.get(prompt_id)
+        if entry is not None:
+            status = entry.get("status", {})
+            if status.get("completed") is True or entry.get("outputs"):
+                return entry
         time.sleep(2)
     raise TimeoutError(f"prompt_id={prompt_id} did not complete in {timeout}s")
 
