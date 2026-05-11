@@ -1,0 +1,27 @@
+# Avatar A v3 — morocha italiana 22 años, pelo full lacio, sex appeal alto
+# Ajustes vs v2:
+#   - 22 años (no 25) → look más juvenil dentro de adulta
+#   - "youthful adult features" en vez de "mature features" para no envejecerla
+#   - Pelo full lacio (no wavy / ondulado) → sleek glossy salon finish
+#   - Cara sensual / sultry / seductive → "vixen aesthetic", bedroom eyes, plump lips
+#
+# Riesgo controlado: 22 + youthful adult está cerca del threshold del age classifier.
+# El safety_negative.txt fixture de pediátrico SIEMPRE se concatena, mitiga.
+
+adult woman, 22 years old, youthful adult features,
+italian heritage, soft feminine sensual features,
+long jet black hair, perfectly straight and sleek, salon-finished glossy,
+mid-back length, sharp clean lines,
+soft hazel green eyes, almond-shaped, sultry bedroom eyes, smoldering gaze,
+porcelain fair skin, smooth and luminous, dewy glow,
+soft heart-shaped face, defined cheekbones,
+defined dark eyebrows, full plump glossy lips, slightly parted,
+hourglass body, natural curves, well-toned, 168cm tall,
+small beauty mark above the left side of upper lip,
+subtle dimple on right cheek when smiling,
+soft smokey eye makeup, glossy nude lips, defined eyeliner,
+sultry seductive expression, magnetic alluring gaze,
+femme fatale vibe, vixen aesthetic, confident sex appeal,
+photorealistic, 35mm film grain, soft natural window lighting with warm rim light,
+raw photo, sharp focused eyes, detailed skin texture with visible pores,
+shot on Sony A7IV, 85mm f1.4

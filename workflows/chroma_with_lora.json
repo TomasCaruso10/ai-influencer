@@ -1,0 +1,87 @@
+{
+  "10": {
+    "inputs": {"vae_name": "ae.safetensors"},
+    "class_type": "VAELoader",
+    "_meta": {"title": "VAE"}
+  },
+  "11": {
+    "inputs": {"clip_name": "t5xxl_fp16.safetensors", "type": "chroma"},
+    "class_type": "CLIPLoader",
+    "_meta": {"title": "CLIP T5"}
+  },
+  "12": {
+    "inputs": {"unet_name": "Chroma1-HD.safetensors", "weight_dtype": "default"},
+    "class_type": "UNETLoader",
+    "_meta": {"title": "UNET Chroma"}
+  },
+  "13": {
+    "inputs": {
+      "lora_name": "aiinfluencer1_flux_FINAL.safetensors",
+      "strength_model": 1.0,
+      "model": ["12", 0]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {"title": "LoRA STRENGTH"}
+  },
+  "14": {
+    "inputs": {"shift": 3.0, "model": ["13", 0]},
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {"title": "ModelSamplingAuraFlow"}
+  },
+  "15": {
+    "inputs": {"text": "PLACEHOLDER_POSITIVE", "clip": ["11", 0]},
+    "class_type": "CLIPTextEncode",
+    "_meta": {"title": "POSITIVE Prompt"}
+  },
+  "16": {
+    "inputs": {"text": "child, teen, minor, underage, kid, schoolgirl, loli, young girl, low quality, blurry", "clip": ["11", 0]},
+    "class_type": "CLIPTextEncode",
+    "_meta": {"title": "NEGATIVE Prompt"}
+  },
+  "17": {
+    "inputs": {"cfg": 3.8, "model": ["14", 0], "positive": ["15", 0], "negative": ["16", 0]},
+    "class_type": "CFGGuider",
+    "_meta": {"title": "CFGGuider"}
+  },
+  "18": {
+    "inputs": {"width": 1024, "height": 1024, "batch_size": 1},
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {"title": "Empty Latent"}
+  },
+  "19": {
+    "inputs": {"sampler_name": "euler"},
+    "class_type": "KSamplerSelect",
+    "_meta": {"title": "Sampler"}
+  },
+  "20": {
+    "inputs": {"steps": 26, "alpha": 0.45, "beta": 0.65, "model": ["14", 0]},
+    "class_type": "BetaSamplingScheduler",
+    "_meta": {"title": "BetaScheduler"}
+  },
+  "21": {
+    "inputs": {"noise_seed": 42},
+    "class_type": "RandomNoise",
+    "_meta": {"title": "RandomNoise SEED"}
+  },
+  "22": {
+    "inputs": {
+      "noise": ["21", 0],
+      "guider": ["17", 0],
+      "sampler": ["19", 0],
+      "sigmas": ["20", 0],
+      "latent_image": ["18", 0]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {"title": "SamplerCustomAdvanced"}
+  },
+  "23": {
+    "inputs": {"samples": ["22", 0], "vae": ["10", 0]},
+    "class_type": "VAEDecode",
+    "_meta": {"title": "VAE Decode"}
+  },
+  "24": {
+    "inputs": {"filename_prefix": "chroma_v2", "images": ["23", 0]},
+    "class_type": "SaveImage",
+    "_meta": {"title": "Save"}
+  }
+}

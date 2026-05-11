@@ -1,0 +1,27 @@
+# Avatar A v4 — morocha italiana 19, vibe influencer natural sensual
+# Vs v3: 19 años (decidido por usuario), look natural influencer
+# en vez de editorial/modelo, sex appeal "girl next door confident" en vez de
+# femme fatale.
+#
+# RIESGO documentado: 19 está cerca del threshold del age classifier.
+# Mitigación: safety_negative.txt fixture pediátrico se concatena siempre,
+# curación manual del usuario descarta cualquier output ambiguo.
+
+adult woman, 19 years old, young adult features, fresh face,
+italian heritage, soft feminine sensual features,
+long jet black hair, perfectly straight and sleek, salon-finished glossy,
+mid-back length, natural healthy shine,
+soft hazel green eyes, almond-shaped, sultry bedroom eyes, alluring gaze,
+porcelain fair skin, smooth and luminous, natural healthy glow,
+soft heart-shaped face, defined cheekbones, balanced youthful features,
+defined dark eyebrows, full plump glossy lips, natural pink tone,
+hourglass body, natural feminine curves, well-toned, 168cm tall,
+small beauty mark above the left side of upper lip,
+subtle dimple on right cheek when smiling,
+soft natural makeup, glossy lips, light tan eyeliner, natural lashes,
+playful flirty confident expression, magnetic alluring presence,
+girl next door beauty with sex appeal, instagram influencer aesthetic,
+photorealistic candid photography, natural daylight or soft window light,
+amateur instagram quality with film grain,
+raw photo, sharp focused eyes, detailed skin texture with visible pores,
+shot on iPhone 15 Pro Max or Sony A7IV

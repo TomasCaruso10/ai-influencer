@@ -1,0 +1,59 @@
+{
+  "4": {
+    "inputs": {"ckpt_name": "bigaspv25.safetensors"},
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {"title": "Load bigASP v2.5"}
+  },
+  "5": {
+    "inputs": {
+      "lora_name": "aiinfluencer1_sdxl_FINAL.safetensors",
+      "strength_model": 1.0,
+      "strength_clip": 1.0,
+      "model": ["4", 0],
+      "clip": ["4", 1]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {"title": "LoRA aiinfluencer1 SDXL"}
+  },
+  "6": {
+    "inputs": {"text": "PLACEHOLDER_POSITIVE", "clip": ["5", 1]},
+    "class_type": "CLIPTextEncode",
+    "_meta": {"title": "POSITIVE"}
+  },
+  "7": {
+    "inputs": {"text": "child, teen, minor, underage, kid, schoolgirl, loli, young girl, adolescent, immature, low quality, blurry, deformed, bad anatomy, extra limbs, watermark, text", "clip": ["5", 1]},
+    "class_type": "CLIPTextEncode",
+    "_meta": {"title": "NEGATIVE"}
+  },
+  "8": {
+    "inputs": {"width": 1024, "height": 1024, "batch_size": 1},
+    "class_type": "EmptyLatentImage",
+    "_meta": {"title": "Empty Latent"}
+  },
+  "9": {
+    "inputs": {
+      "seed": 42,
+      "steps": 25,
+      "cfg": 7.0,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
+      "denoise": 1.0,
+      "model": ["5", 0],
+      "positive": ["6", 0],
+      "negative": ["7", 0],
+      "latent_image": ["8", 0]
+    },
+    "class_type": "KSampler",
+    "_meta": {"title": "KSampler SEED"}
+  },
+  "10": {
+    "inputs": {"samples": ["9", 0], "vae": ["4", 2]},
+    "class_type": "VAEDecode",
+    "_meta": {"title": "VAE Decode"}
+  },
+  "11": {
+    "inputs": {"filename_prefix": "sdxl_nsfw", "images": ["10", 0]},
+    "class_type": "SaveImage",
+    "_meta": {"title": "Save"}
+  }
+}

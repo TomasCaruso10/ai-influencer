@@ -1,0 +1,63 @@
+# Outputs (assets generados, no commiteables)
+outputs/
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.uv/
+*.egg-info/
+build/
+dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs / temp
+*.log
+logs/
+tmp/
+.tmp/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets/
+runpod_api_key*
+fal_api_key*
+kling_api_key*
+
+# Pydantic-graph state (en fase 2)
+*.mongodump
+
+# ComfyUI runtime
+ComfyUI/
+input/
+custom_nodes/
+
+# Claude Code local config
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Windows PowerShell artifact
+NUL

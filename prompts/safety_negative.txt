@@ -1,0 +1,9 @@
+# Negative prompt fixture — SAFETY (edad)
+# Aplicar SIEMPRE en TODA generación (NSFW y SFW).
+# Concatenar al final del negative prompt específico del workflow.
+
+child, children, kid, kids, baby, infant, toddler, preteen, teen, teenager, teenaged,
+minor, minors, underage, young girl, young boy, schoolgirl, schoolboy,
+loli, lolita, shota, jailbait, youngster, juvenile, adolescent,
+small body, flat chest child, childlike, child-like, immature features,
+elementary, middle school, high school student

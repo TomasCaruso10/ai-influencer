@@ -1,0 +1,6 @@
+# Body framings — para evaluar el avatar (retrato + medio cuerpo + cuerpo completo)
+# Una línea por variación. El generador rota.
+
+close-up portrait, head and shoulders, looking directly at camera, soft natural light
+half body shot from waist up, casual fitted top, three quarter angle, natural pose
+full body shot, casual outfit jeans and crop top, standing pose, daylight, full figure visible

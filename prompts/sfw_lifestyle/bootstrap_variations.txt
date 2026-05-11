@@ -1,0 +1,34 @@
+# Bootstrap variations — para Fase 1 (bootstrap de candidatos para LoRA)
+#
+# Cada línea es un sufijo que se concatena AL FINAL del canon en el positive prompt.
+# La idea: variar pose, ángulo, contexto, ropa SIN variar la identidad física.
+# Variedad razonable = LoRA aprende cara/cuerpo desde múltiples ángulos.
+#
+# El generador rota estas variations + seed-rotation para producir N candidatos.
+# Variations vacías (o canon puro) también valen → mantener algunas líneas en blanco.
+#
+# Reglas:
+# - SFW only en bootstrap (queremos coherencia facial limpia primero).
+# - Distintos contextos pero similar estilo de iluminación = más fácil para LoRA.
+# - Evitar prompts que pidan rasgos físicos distintos (ya están en el canon).
+
+portrait headshot looking at camera, soft window light, neutral background
+half body shot, looking slightly to the side, soft daylight
+full body shot, casual outfit jeans and white tshirt, neutral indoor
+candid moment at a coffee shop, sitting by the window, golden hour light
+walking outdoors in autumn park, casual fall outfit, natural lighting
+mirror selfie, casual outfit, bedroom setting
+portrait at sunset golden hour, soft warm light, minimal background
+looking over shoulder, hair flowing, urban backdrop
+relaxed pose on a couch, cozy sweater, indoor warm lighting
+portrait at the beach, ocean breeze, late afternoon light
+gym outfit, athletic wear, soft daylight, mirror reflection
+elegant outfit black dress, soft studio lighting, neutral grey background
+casual outdoor cafe terrace, smiling subtly, natural daylight
+close up portrait emphasizing eyes and freckles, very soft natural light
+three quarter view portrait, soft beauty light, no makeup natural
+laughing candid moment, daylight, casual outfit
+bookstore interior, browsing books, warm tungsten lighting
+rooftop urban setting, evening blue hour
+home setting kitchen morning, warm light through window
+sitting at a desk reading, warm desk lamp light

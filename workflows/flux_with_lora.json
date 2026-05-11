@@ -1,0 +1,77 @@
+{
+  "10": {
+    "inputs": {"vae_name": "ae.safetensors"},
+    "class_type": "VAELoader",
+    "_meta": {"title": "VAE Loader"}
+  },
+  "11": {
+    "inputs": {"clip_name1": "t5xxl_fp16.safetensors", "clip_name2": "clip_l.safetensors", "type": "flux"},
+    "class_type": "DualCLIPLoader",
+    "_meta": {"title": "DualCLIP Loader"}
+  },
+  "12": {
+    "inputs": {"unet_name": "flux1-dev.safetensors", "weight_dtype": "default"},
+    "class_type": "UNETLoader",
+    "_meta": {"title": "UNET Loader"}
+  },
+  "13": {
+    "inputs": {
+      "lora_name": "aiinfluencer1_flux_v3_step250.safetensors",
+      "strength_model": 1.0,
+      "model": ["12", 0]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {"title": "LoRA Loader STRENGTH"}
+  },
+  "14": {
+    "inputs": {"max_shift": 1.15, "base_shift": 0.5, "width": 1024, "height": 1024, "model": ["13", 0]},
+    "class_type": "ModelSamplingFlux",
+    "_meta": {"title": "ModelSamplingFlux"}
+  },
+  "15": {
+    "inputs": {"text": "PLACEHOLDER_POSITIVE", "clip": ["11", 0]},
+    "class_type": "CLIPTextEncode",
+    "_meta": {"title": "POSITIVE Prompt"}
+  },
+  "16": {
+    "inputs": {"text": "", "clip": ["11", 0]},
+    "class_type": "CLIPTextEncode",
+    "_meta": {"title": "NEGATIVE Prompt"}
+  },
+  "17": {
+    "inputs": {"guidance": 3.5, "conditioning": ["15", 0]},
+    "class_type": "FluxGuidance",
+    "_meta": {"title": "FluxGuidance"}
+  },
+  "18": {
+    "inputs": {"width": 1024, "height": 1024, "batch_size": 1},
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {"title": "Empty Latent"}
+  },
+  "19": {
+    "inputs": {
+      "seed": 42,
+      "steps": 20,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0,
+      "model": ["14", 0],
+      "positive": ["17", 0],
+      "negative": ["16", 0],
+      "latent_image": ["18", 0]
+    },
+    "class_type": "KSampler",
+    "_meta": {"title": "KSampler SEED"}
+  },
+  "20": {
+    "inputs": {"samples": ["19", 0], "vae": ["10", 0]},
+    "class_type": "VAEDecode",
+    "_meta": {"title": "VAE Decode"}
+  },
+  "21": {
+    "inputs": {"filename_prefix": "test_lora", "images": ["20", 0]},
+    "class_type": "SaveImage",
+    "_meta": {"title": "Save"}
+  }
+}
