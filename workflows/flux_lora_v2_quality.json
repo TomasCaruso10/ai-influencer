@@ -1,0 +1,199 @@
+{
+  "10": {
+    "inputs": {"vae_name": "ae.safetensors"},
+    "class_type": "VAELoader"
+  },
+  "11": {
+    "inputs": {"clip_name1": "t5xxl_fp16.safetensors", "clip_name2": "clip_l.safetensors", "type": "flux"},
+    "class_type": "DualCLIPLoader"
+  },
+  "12": {
+    "inputs": {"unet_name": "flux1-dev.safetensors", "weight_dtype": "default"},
+    "class_type": "UNETLoader"
+  },
+  "13": {
+    "inputs": {
+      "lora_name": "aiinfluencer1_flux_v2.safetensors",
+      "strength_model": 1.05,
+      "model": ["12", 0]
+    },
+    "class_type": "LoraLoaderModelOnly"
+  },
+  "14": {
+    "inputs": {"max_shift": 1.15, "base_shift": 0.5, "width": 1024, "height": 1024, "model": ["13", 0]},
+    "class_type": "ModelSamplingFlux"
+  },
+  "15": {
+    "inputs": {"text": "PLACEHOLDER_POSITIVE", "clip": ["11", 0]},
+    "class_type": "CLIPTextEncode"
+  },
+  "16": {
+    "inputs": {"text": "child, teen, minor, underage, kid, schoolgirl, loli, young girl, blurry, deformed, bad anatomy, watermark, text", "clip": ["11", 0]},
+    "class_type": "CLIPTextEncode"
+  },
+  "17": {
+    "inputs": {"guidance": 3.5, "conditioning": ["15", 0]},
+    "class_type": "FluxGuidance"
+  },
+  "18": {
+    "inputs": {"width": 1024, "height": 1024, "batch_size": 1},
+    "class_type": "EmptySD3LatentImage"
+  },
+  "19": {
+    "inputs": {
+      "seed": 42,
+      "steps": 25,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0,
+      "model": ["14", 0],
+      "positive": ["17", 0],
+      "negative": ["16", 0],
+      "latent_image": ["18", 0]
+    },
+    "class_type": "KSampler"
+  },
+  "20": {
+    "inputs": {"samples": ["19", 0], "vae": ["10", 0]},
+    "class_type": "VAEDecode"
+  },
+  "25": {
+    "inputs": {"model_name": "bbox/face_yolov8m.pt"},
+    "class_type": "UltralyticsDetectorProvider"
+  },
+  "30": {
+    "inputs": {
+      "image": ["20", 0],
+      "model": ["14", 0],
+      "clip": ["11", 0],
+      "vae": ["10", 0],
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 142,
+      "steps": 25,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "positive": ["17", 0],
+      "negative": ["16", 0],
+      "denoise": 0.45,
+      "feather": 24,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.5,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3.0,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 20,
+      "bbox_detector": ["25", 0]
+    },
+    "class_type": "FaceDetailer"
+  },
+  "31": {
+    "inputs": {
+      "image": ["30", 0],
+      "model": ["14", 0],
+      "clip": ["11", 0],
+      "vae": ["10", 0],
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 242,
+      "steps": 25,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "positive": ["17", 0],
+      "negative": ["16", 0],
+      "denoise": 0.25,
+      "feather": 16,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.5,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3.0,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 16,
+      "bbox_detector": ["25", 0]
+    },
+    "class_type": "FaceDetailer"
+  },
+  "32": {
+    "inputs": {
+      "image": ["31", 0],
+      "model": ["14", 0],
+      "clip": ["11", 0],
+      "vae": ["10", 0],
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 342,
+      "steps": 25,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "positive": ["17", 0],
+      "negative": ["16", 0],
+      "denoise": 0.15,
+      "feather": 8,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.5,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3.0,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 8,
+      "bbox_detector": ["25", 0]
+    },
+    "class_type": "FaceDetailer"
+  },
+  "40": {
+    "inputs": {"model_name": "4x-UltraSharp.pth"},
+    "class_type": "UpscaleModelLoader"
+  },
+  "41": {
+    "inputs": {"upscale_model": ["40", 0], "image": ["32", 0]},
+    "class_type": "ImageUpscaleWithModel"
+  },
+  "42": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "scale_by": 0.5,
+      "image": ["41", 0]
+    },
+    "class_type": "ImageScaleBy"
+  },
+  "50": {
+    "inputs": {"filename_prefix": "v2q", "images": ["42", 0]},
+    "class_type": "SaveImage"
+  }
+}
