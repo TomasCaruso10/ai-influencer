@@ -88,7 +88,7 @@ def main() -> int:
             print(f"[{counter}/{total}] prompt={prompt[:60]}... seed={seed}", flush=True)
             try:
                 pid = submit_prompt(args.comfy_url, workflow)
-                hist = wait_completion(args.comfy_url, pid, timeout=180)
+                hist = wait_completion(args.comfy_url, pid, timeout=600)
                 # Find output image
                 outputs = hist.get("outputs", {}).get(args.save_node_id, {}).get("images", [])
                 for img in outputs:
