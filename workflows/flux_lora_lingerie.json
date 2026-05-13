@@ -1,0 +1,50 @@
+{
+  "1": {
+    "inputs": {"unet_name": "flux1-dev-fp8.safetensors", "weight_dtype": "fp8_e4m3fn"},
+    "class_type": "UNETLoader"
+  },
+  "2": {
+    "inputs": {"clip_name1": "t5xxl_fp8.safetensors", "clip_name2": "clip_l.safetensors", "type": "flux"},
+    "class_type": "DualCLIPLoader"
+  },
+  "3": {
+    "inputs": {"vae_name": "ae.safetensors"},
+    "class_type": "VAELoader"
+  },
+  "4": {
+    "inputs": {"lora_name": "aiinfluencer1_flux_v2.safetensors", "strength_model": 1.0, "model": ["1", 0]},
+    "class_type": "LoraLoaderModelOnly"
+  },
+  "5": {
+    "inputs": {"max_shift": 1.15, "base_shift": 0.5, "width": 832, "height": 1216, "model": ["4", 0]},
+    "class_type": "ModelSamplingFlux"
+  },
+  "6": {
+    "inputs": {"text": "PLACEHOLDER_POSITIVE", "clip": ["2", 0]},
+    "class_type": "CLIPTextEncode"
+  },
+  "7": {
+    "inputs": {"text": "child, teen, minor, underage, kid, schoolgirl, loli, young girl, blurry, deformed, bad anatomy, extra limbs, watermark, text, ugly", "clip": ["2", 0]},
+    "class_type": "CLIPTextEncode"
+  },
+  "8": {
+    "inputs": {"guidance": 3.5, "conditioning": ["6", 0]},
+    "class_type": "FluxGuidance"
+  },
+  "9": {
+    "inputs": {"width": 832, "height": 1216, "batch_size": 1},
+    "class_type": "EmptySD3LatentImage"
+  },
+  "10": {
+    "inputs": {"seed": 42, "steps": 25, "cfg": 1.0, "sampler_name": "euler", "scheduler": "simple", "denoise": 1.0, "model": ["5", 0], "positive": ["8", 0], "negative": ["7", 0], "latent_image": ["9", 0]},
+    "class_type": "KSampler"
+  },
+  "11": {
+    "inputs": {"samples": ["10", 0], "vae": ["3", 0]},
+    "class_type": "VAEDecode"
+  },
+  "12": {
+    "inputs": {"filename_prefix": "lingerie", "images": ["11", 0]},
+    "class_type": "SaveImage"
+  }
+}
